@@ -1,0 +1,127 @@
+@import "fonts", "mixins";
+
+.modal-user-information-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  opacity: 0;
+  visibility: hidden;
+  background-color: rgba($color: #000000, $alpha: 0.3);
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+
+  .modal {
+    background: var(--main-bg-6);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -30%);
+    width: 70%;
+    max-width: 800px;
+    display: grid;
+    gap: 40px;
+    font-family: $main-font;
+    border-radius: 20px;
+    padding: 44px;
+    grid-template-columns: 0.7fr 1fr;
+    transition: transform 0.3s ease;
+
+    .title-modal {
+      grid-column: 1 / 3;
+
+      font-size: 2.4rem;
+      color: var(--main-text-color-1);
+      grid-column: 1 / 3;
+    }
+
+    .avatar-container {
+      border-radius: 50%;
+      overflow: hidden;
+      position: relative;
+      cursor: pointer;
+      width: 250px;
+      height: 250px;
+      align-self: center;
+      justify-self: center;
+
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+
+      &:hover .hover-container {
+        opacity: 1;
+      }
+
+      .hover-container {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(#000000, 0.5);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+
+        svg {
+          fill: white;
+          width: 50%;
+        }
+
+        span {
+          color: white;
+          font-weight: 700;
+          font-size: 20px;
+        }
+      }
+    }
+
+    .form {
+      display: grid;
+      gap: 10px;
+      .control-container {
+          height: 55px;
+        input {
+          @include input();
+          font-size: 15px;
+          background: transparent;
+        }
+
+        .message-error {
+            font-size: 14px;
+            color: var(--main-danger-color);
+        }
+      }
+
+      .btn-update-user-profile {
+        @include button_1();
+        font-size: 15px;
+        background: var(--main-bg-7);
+        color: #fafafa;
+      }
+    }
+  }
+}
+
+.modal-user-information-container.visible {
+  opacity: 1;
+  visibility: visible;
+
+  .modal {
+    transform: translate(-50%, -50%);
+  }
+}
+
+@media (min-width: 1300px) {
+  .modal-user-information-container {
+    .modal {
+      width: 55%;
+    }
+  }
+}

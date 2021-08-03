@@ -1,0 +1,84 @@
+
+version: "3.9"
+
+services:
+  backend:
+    container_name: backend
+    build: ./backend
+    depends_on:
+      - db
+    env_file:
+      - backend/.prod.env
+    ports:
+      - "8000:8000"
+    networks:
+      - chat-network
+    command: python /app/manage.py runserver 0.0.0.0:8000
+
+  frontend:
+    container_name: frontend
+    build: ./frontend
+    depends_on:
+      - backend
+    volumes:
+      - "./frontend:/app"
+    ports:
+      - "3000:3000"
+    networks:
+      - chat-network
+    command: serve -s build -p 3000
+
+  db:
+    image: mariadb
+    networks:
+      - chat-network
+    environment:
+      MYSQL_ROOT_PASSWORD: @kKTFh%orh9d
+
+  nginx:
+    build: ./nginx
+    networks:
+      - chat-network
+    environment: 
+      - VIRTUAL_HOST=my-chat.xyz,www.my-chat.xyz
+      - LETSENCRYPT_HOST=my-chat.xyz,www.my-chat.xyz
+    restart: always
+    depends_on:
+      - frontend
+      - backend
+      - db
+      - nginx-proxy
+      - letsencrypt
+
+  nginx-proxy:
+    image: jwilder/nginx-proxy
+    restart: always
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - /var/run/docker.sock:/tmp/docker.sock:ro
+      - certs:/etc/nginx/certs:ro
+      - vhostd:/etc/nginx/vhost.d
+      - html:/usr/share/nginx/html
+    networks:
+      - chat-net
+    labels:
+        - com.github.jrcs.letsencrypt_nginx_proxy_companion.nginx_proxy
+
+  letsencrypt:
+    image: jrcs/letsencrypt-nginx-proxy-companion
+    restart: always
+    environment:
+      - NGINX_PROXY_CONTAINER=nginx-proxy
+    volumes:
+      - certs:/etc/nginx/certs:rw
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - vhostd:/etc/nginx/vhost.d
+      - html:/usr/share/nginx/html
+    networks:
+      - chat-net
+
+networks:
+  chat-network:
+    driver: bridge

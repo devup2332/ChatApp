@@ -1,0 +1,40 @@
+@import "fonts", "themes";
+
+.snackbar-component {
+  position: fixed;
+  background-color: var(--main-bg-3);
+  width: 80%;
+  bottom: -200px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  padding: 10px;
+  border-radius: 10px;
+  justify-content: space-between;
+  align-items: center;
+  transition: bottom 0.3s ease;
+  max-width: 300px;
+
+  span {
+    font-family: $main_font;
+    color: var(--main-text-color-1);
+  }
+
+  button {
+    width: 30px;
+    height: 30px;
+    background: transparent;
+    border: none;
+    outline: none;
+    padding: 5px;
+    cursor: pointer;
+
+    svg {
+      fill: var(--main-text-color-1);
+    }
+  }
+}
+
+.snackbar-component.show {
+  bottom: 20px;
+}

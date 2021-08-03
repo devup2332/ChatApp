@@ -1,0 +1,11 @@
+node_modules
+
+.*env
+
+__pychache__
+
+.vim
+
+build
+
+dist
