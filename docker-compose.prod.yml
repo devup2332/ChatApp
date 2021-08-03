@@ -33,7 +33,7 @@ services:
     networks:
       - chat-network
     environment:
-      MYSQL_ROOT_PASSWORD: @kKTFh%orh9d
+      MYSQL_ROOT_PASSWORD: kKTFh%orh9d
 
   nginx:
     build: ./nginx
