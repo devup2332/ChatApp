@@ -82,3 +82,8 @@ services:
 networks:
   chat-network:
     driver: bridge
+
+volumes:
+  certs:
+  html:
+  vhostd:    
