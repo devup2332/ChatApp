@@ -2,12 +2,8 @@ FROM node:14.17.1
 
 WORKDIR /app
 
-COPY . ./
-
-RUN npm install
+COPY ./build ./
 
 RUN npm install -g serve
-
-RUN npm run build
 
 EXPOSE 3000
