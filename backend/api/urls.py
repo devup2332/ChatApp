@@ -1,8 +1,13 @@
 from django.urls.conf import path
 from rest_framework_simplejwt.views import TokenVerifyView,TokenRefreshView
 from api import views
+from django.contrib import admin;
+from django.urls import include;
 
 urlpatterns = [
+
+    path('admin/', admin.site.urls),
+    path('accounts/', include('allauth.urls')),
     path("auth/login",views.LoginView.as_view()),
     path("auth/verify",TokenVerifyView.as_view()),
     path("messages",views.MessageView.as_view()),
