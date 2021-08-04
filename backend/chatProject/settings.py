@@ -55,7 +55,7 @@ SOCIALACCOUNT_PROVIDERS = {
     }
 }
 
-SITE_ID = 3
+SITE_ID = os.getenv("GOOGLE_APP_ID")
 
 LOGIN_REDIRECT_URL = '/api/auth/login-google'
 LOGOUT_REDIRECT_URL = '/'
