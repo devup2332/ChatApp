@@ -13,9 +13,9 @@ export class AuthUserService {
   user: User;
   constructor(private http: HttpClient) {
     if (localStorage.getItem('access')) {
-      this._getUserLogged().then((data) => {
-        this.user = data;
-      });
+       (async ()=> {
+           this.user = await this._getUserLogged();
+       })();
     }
   }
 
@@ -80,7 +80,7 @@ export class AuthUserService {
       const access = localStorage.getItem('access');
       const email = control.value;
 
-      if (this.user.email === email) {
+      if (this.user?.email === email) {
         return EMPTY.pipe(map(()=> null));
       }
       

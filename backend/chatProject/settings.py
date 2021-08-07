@@ -64,7 +64,7 @@ SOCIALACCOUNT_PROVhDERS = {
 
 SITE_ID = 3
 
-LOGIN_REDIRECT_URL = 'http://localhost/api/auth/login-google'
+LOGIN_REDIRECT_URL = '/api/auth/login-google'
 LOGOUT_REDIRECT_URL = '/'
 
 ACCOUNT_USER_MODEL_USERNAME_FIELD = None
@@ -73,7 +73,8 @@ ACCOUNT_USERNAME_REQUIRED = False
 ACCOUNT_AUTHENTICATION_METHOD = 'email'
 
 CORS_ALLOWED_ORIGINS = [
-    os.getenv("ORIGIN_CORS_CLIENT")
+    os.getenv("ORIGIN_CORS_CLIENT"),
+    "http://localhost"
 ]
 
 SECRET_KEY = os.getenv("DJANGO_SECRET_KEY")

@@ -23,11 +23,13 @@ services:
     build:
       context: ./frontend
       dockerfile: dockerfile.dev
+    volumes:
+      - "./frontend:/frontend"
     ports:
       - "3000:3000"
     networks:
       - chat-network
-    command: serve -s -p 3000
+    command: npm run dev
 
   db:
     image: mariadb

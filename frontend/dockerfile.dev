@@ -2,8 +2,8 @@ FROM node:14.17.1
 
 WORKDIR /frontend
 
-COPY build ./
+COPY . ./
 
-RUN npm install -g serve
+RUN npm install
 
 EXPOSE 3000
