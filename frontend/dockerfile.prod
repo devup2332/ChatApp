@@ -4,6 +4,6 @@ WORKDIR /frontend
 
 COPY build ./
 
-RUN npm install -g serve
+RUN npm install -g serve@10.1.1
 
 EXPOSE 3000
