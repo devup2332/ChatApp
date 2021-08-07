@@ -16,7 +16,7 @@ pusher_client = pusher.Pusher(
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-f-k^q5ap8@64*1lk^sv0n#+h*wsl)8*sawne4-7(gddo!n6x2_'
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ["my-chat.xyz","localhost","backend"]
 
