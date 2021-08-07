@@ -18,7 +18,6 @@ urlpatterns = [
     path('create-chat',views.CreateChatView.as_view()),
     path('upload-photo',views.ImageUploadView.as_view()),
     path('auth/login-google',views.LoginGoogleView.as_view()),
-    path('testing',views.Testing.as_view()),
     path('update-profile',views.UpdateProfileView.as_view()),
     path('validate-email-profile',views.ValidateEmailProfile.as_view())
 ]

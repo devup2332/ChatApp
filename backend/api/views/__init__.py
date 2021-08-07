@@ -12,6 +12,5 @@ from .SearchUserView import SearchUserView
 from .CreateChat import CreateChatView
 from .ImageUpload import ImageUploadView
 from .LoginGoogle import LoginGoogleView
-from .Testing import Testing
 from .UpdateProfileView import UpdateProfileView
 from .ValidateEmailProfile import ValidateEmailProfile
