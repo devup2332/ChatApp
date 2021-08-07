@@ -7,3 +7,5 @@ __pychache__
 .vim
 
 dist
+
+migrations

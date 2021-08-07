@@ -37,7 +37,6 @@ export class LoginComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnDestroy() {
-    console.log('Login Desmontado');
     this._PusherSrv.channel.unbind_all();
   }
 
@@ -72,7 +71,6 @@ export class LoginComponent implements OnInit, OnDestroy {
 
     this._PusherSrv.channel.bind('login-google', (data: any) => {
       if (window) {
-        console.log('Login Google');
         window.close();
         localStorage.setItem('access', data.access);
         localStorage.setItem('refresh', data.refresh);

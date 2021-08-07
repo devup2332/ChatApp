@@ -52,6 +52,7 @@ export class ChatComponent implements OnInit {
   ) {}
 
   async ngOnInit(): Promise<void> {
+      this.user = this._authSrv.user;
     //Start loading
     this.loading = true;
 
