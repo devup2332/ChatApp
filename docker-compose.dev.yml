@@ -27,7 +27,7 @@ services:
       - "3000:3000"
     networks:
       - chat-network
-    command: serve -p 3000
+    command: serve -s -p 3000
 
   db:
     image: mariadb
