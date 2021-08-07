@@ -1,5 +1,3 @@
-from rest_framework import serializers
-from api.serializers.UserSerializer import UserSerializer
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
@@ -14,4 +12,4 @@ class UpdateProfileView (APIView):
 
     def post(self,request):
         User.objects.filter(email=request.user).update(**request.data)
-        return Response("User updated from backend")
+        return Response("User updated from backend",status=status.HTTP_200_OK)

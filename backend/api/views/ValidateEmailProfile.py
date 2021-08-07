@@ -16,9 +16,9 @@ class ValidateEmailProfile (APIView):
         if not user: 
             return Response({
                 "status": True,
-                "message": "dsadasdas"
+                "message": "User is free"
                 })
         return Response({
             "status": False,
-            "message": "User free to use"
+            "message": "User already exist"
         })

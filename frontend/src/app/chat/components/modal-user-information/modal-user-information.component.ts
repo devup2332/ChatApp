@@ -1,7 +1,5 @@
-import { HttpEventType } from '@angular/common/http';
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import HTTPRequest from 'pusher-js/types/src/core/http/http_request';
 import { SnackbarComponent } from 'src/app/shared/components/snackbar/snackbar.component';
 import { AuthUserService } from 'src/app/shared/services/auth-user.service';
 import { PusherService } from 'src/app/shared/services/pusher.service';
@@ -61,7 +59,7 @@ export class ModalUserInformationComponent implements OnInit {
       return Object.values(this.userForm.controls).forEach((control) => {
         control.markAsDirty();
       });
-    this._authSrv._updateProfile(userData).subscribe((data) => {
+    this._authSrv._updateProfile(userData).subscribe(() => {
       this.snackbar.show('User was updated');
     });
   }

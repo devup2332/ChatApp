@@ -120,7 +120,7 @@ export class LoginComponent implements OnInit, OnDestroy {
   }
 
   logginGoogle() {
-    const google__uri = `${environment.backend_uri}/accounts/google/login/?process=login`;
+    const google__uri = `/accounts/google/login/?process=login`;
     window = open(google__uri) as Window;
   }
 

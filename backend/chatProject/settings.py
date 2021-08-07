@@ -1,5 +1,6 @@
 from pathlib import Path
 from datetime import timedelta
+import cloudinary
 import pusher
 import os
 import mimetypes
@@ -15,9 +16,15 @@ pusher_client = pusher.Pusher(
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-f-k^q5ap8@64*1lk^sv0n#+h*wsl)8*sawne4-7(gddo!n6x2_'
-DEBUG = os.getenv("DEBUG_MODE")
+DEBUG = False
 
-ALLOWED_HOSTS = [os.getenv("CLIENT_HOST")]
+ALLOWED_HOSTS = ["my-chat.xyz","localhost","backend"]
+
+cloudinary.config(cloud_name = "dder8kjda", 
+  api_key = os.getenv("CLOUDINARY_KEY"), 
+  api_secret = os.getenv("CLOUDINARY_SECRET_KEY"),
+  secure = True
+)
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -42,8 +49,8 @@ AUTHENTICATION_BACKENDS = [
     'allauth.account.auth_backends.AuthenticationBackend'
 ]
 
-#AUTHENTICATION VALUES
-SOCIALACCOUNT_PROVIDERS = {
+# AUTHENTICATION VALUES
+SOCIALACCOUNT_PROVhDERS = {
     'google': {
         'SCOPE': [
             'profile',
@@ -55,9 +62,9 @@ SOCIALACCOUNT_PROVIDERS = {
     }
 }
 
-SITE_ID = 6
+SITE_ID = 3
 
-LOGIN_REDIRECT_URL = '/api/auth/login-google'
+LOGIN_REDIRECT_URL = 'http://localhost/api/auth/login-google'
 LOGOUT_REDIRECT_URL = '/'
 
 ACCOUNT_USER_MODEL_USERNAME_FIELD = None
@@ -68,8 +75,6 @@ ACCOUNT_AUTHENTICATION_METHOD = 'email'
 CORS_ALLOWED_ORIGINS = [
     os.getenv("ORIGIN_CORS_CLIENT")
 ]
-
-CORS_ALLOW_ALL_ORIGINS = True
 
 SECRET_KEY = os.getenv("DJANGO_SECRET_KEY")
 
@@ -88,6 +93,9 @@ MIDDLEWARE = [
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ),
+    'DEFAULT_RENDERER_CLASSES': (
+        'rest_framework.renderers.JSONRenderer',
     )
 }
 
@@ -135,9 +143,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'chatProject.wsgi.application'
 
-STATICFILES_DIRS = [
-    BASE_DIR / "static",
-]
 
 DATABASES = {
     'default': {
@@ -175,25 +180,11 @@ USE_L10N = True
 
 USE_TZ = True
 
-STATIC_URL = '/static/'
+STATIC_URL = '/admin/static/'
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 AUTH_USER_MODEL = 'api.User'
 
-
-# DIGITAL OCEAN SPACES
-AWS_ACCESS_KEY_ID = os.getenv('AWS_ACCESS_KEY_ID')
-AWS_SECRET_ACCESS_KEY = os.getenv('AWS_SECRET_ACCESS_KEY')
-AWS_STORAGE_BUCKET_NAME = os.getenv('AWS_STORAGE_BUCKET_NAME')
-AWS_S3_ENDPOINT_URL = os.getenv('AWS_S3_ENDPOINT_URL')
-AWS_DEFAULT_ACL = 'public-read'
-AWS_S3_OBJECT_PARAMETERS = {
-    'CacheControl': 'max-age=86400',
-}
-
-AWS_LOCATION = 'images'
-
-DEFAULT_FILE_STORAGE = 'chatProject.custom_storage.MediaStorage'
-
-MEDIA_ROOT = '{}/{}/'.format(AWS_S3_ENDPOINT_URL, AWS_LOCATION)
-MEDIA_URL = "/images/"
