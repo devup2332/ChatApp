@@ -63,6 +63,7 @@ SOCIALACCOUNT_PROVhDERS = {
 
 SITE_ID = 3
 
+
 LOGIN_REDIRECT_URL = '/api/auth/login-google'
 LOGOUT_REDIRECT_URL = '/'
 
