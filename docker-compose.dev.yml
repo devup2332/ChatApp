@@ -37,7 +37,8 @@ services:
     networks:
       - chat-network
     environment:
-      MYSQL_ROOT_PASSWORD: 123456789
+      MYSQL_ROOT_PASSWORD: 999999999
+      MYSQL_DATABASE: "chatDatabase"
 
   nginx:
     build: ./nginx

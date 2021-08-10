@@ -5,7 +5,7 @@ from django.contrib.auth.models import BaseUserManager,AbstractBaseUser, Permiss
 class UserManager (BaseUserManager):
 
     #Handler to create a normal user
-    def create_user(self,email,last_name,first_name,phone,password):
+    def create_user(self,email,last_name,first_name,phone,password=None):
         user= self.model()
         user.email = self.normalize_email(email)
         user.phone = phone
@@ -16,7 +16,7 @@ class UserManager (BaseUserManager):
         return user
 
     #Hadler to create a superuser
-    def create_superuser(self,email,last_name,first_name,phone,password):
+    def create_superuser(self,email,last_name,first_name,phone,password:None):
         user = self.create_user(email,last_name,first_name,phone,password)
         user.is_admin = True
         user.is_superuser = True
@@ -30,9 +30,9 @@ class User(AbstractBaseUser,PermissionsMixin):
     
     #Camps for a normal user
     email = models.EmailField(unique=True)
-    last_name = models.CharField(max_length=100, default="")
-    first_name = models.CharField(max_length=100, default="")
-    phone = models.IntegerField(default=0,max_length=100)
+    last_name = models.CharField(max_length=100, default="",blank=True)
+    first_name = models.CharField(max_length=100, default="",blank=True)
+    phone = models.CharField(default="",max_length=100)
     status = models.BooleanField(default=False)
     password = models.CharField(max_length=200,default="")
     is_active = models.BooleanField(default=True)

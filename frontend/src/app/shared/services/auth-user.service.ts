@@ -13,9 +13,9 @@ export class AuthUserService {
   user: User;
   constructor(private http: HttpClient) {
     if (localStorage.getItem('access')) {
-       (async ()=> {
-           this.user = await this._getUserLogged();
-       })();
+      (async () => {
+        this.user = await this._getUserLogged();
+      })();
     }
   }
 
@@ -23,6 +23,13 @@ export class AuthUserService {
     return this.http
       .post(`${environment.backend_uri}/api/auth/login`, credentials)
       .toPromise<any>();
+  }
+
+  _loginGoogleUser(data: any) {
+    return this.http.post(
+      `${environment.backend_uri}/api/auth/loginGoogle`,
+      data
+    );
   }
 
   _check_passwords(
@@ -76,14 +83,13 @@ export class AuthUserService {
     ):
       | Promise<ValidationErrors | null>
       | Observable<ValidationErrors | null> => {
-
       const access = localStorage.getItem('access');
       const email = control.value;
 
       if (this.user?.email === email) {
-        return EMPTY.pipe(map(()=> null));
+        return EMPTY.pipe(map(() => null));
       }
-      
+
       return this.http
         .post(
           `${environment.backend_uri}/api/validate-email-profile`,
@@ -145,12 +151,11 @@ export class AuthUserService {
   _uploadPhoto(data: FormData) {
     const access = localStorage.getItem('access');
 
-    return this.http
-      .post(`${environment.backend_uri}/api/upload-photo`, data, {
-        headers: {
-          Authorization: `Bearer ${access}`,
-        },
-      })
+    return this.http.post(`${environment.backend_uri}/api/upload-photo`, data, {
+      headers: {
+        Authorization: `Bearer ${access}`,
+      },
+    });
   }
 
   _updateProfile(data: User) {

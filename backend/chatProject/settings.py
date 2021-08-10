@@ -18,13 +18,14 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-f-k^q5ap8@64*1lk^sv0n#+h*wsl)8*sawne4-7(gddo!n6x2_'
 DEBUG = True
 
-ALLOWED_HOSTS = ["my-chat.xyz","localhost","backend"]
+ALLOWED_HOSTS = ["localhost","my-chat.xyz"]
 
 cloudinary.config(cloud_name = "dder8kjda", 
   api_key = os.getenv("CLOUDINARY_KEY"), 
   api_secret = os.getenv("CLOUDINARY_SECRET_KEY"),
   secure = True
 )
+
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -36,45 +37,19 @@ INSTALLED_APPS = [
     'api',
     'rest_framework',
     'corsheaders',
-    'allauth',
-    'allauth.account',
-    'allauth.socialaccount',
-    'allauth.socialaccount.providers.google',
-    'storages'
 ]
+
+SITE_ID = 1
 
 AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',
-    'allauth.account.auth_backends.AuthenticationBackend'
 ]
 
-# AUTHENTICATION VALUES
-SOCIALACCOUNT_PROVhDERS = {
-    'google': {
-        'SCOPE': [
-            'profile',
-            'email',
-        ],
-        'AUTH_PARAMS': {
-            'access_type': 'online',
-        }
-    }
-}
-
-SITE_ID = 3
-
-
-LOGIN_REDIRECT_URL = '/api/auth/login-google'
-LOGOUT_REDIRECT_URL = '/'
-
-ACCOUNT_USER_MODEL_USERNAME_FIELD = None
-ACCOUNT_EMAIL_REQUIRED = True
-ACCOUNT_USERNAME_REQUIRED = False
-ACCOUNT_AUTHENTICATION_METHOD = 'email'
-
 CORS_ALLOWED_ORIGINS = [
-    os.getenv("ORIGIN_CORS_CLIENT"),
-    "http://localhost"
+        "http://localhost:3000",
+        "http://localhost",
+        "http://my-chat.xyz",
+        "https://my-chat.xyz"
 ]
 
 SECRET_KEY = os.getenv("DJANGO_SECRET_KEY")
@@ -144,7 +119,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'chatProject.wsgi.application'
 
-
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
@@ -188,4 +162,3 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 AUTH_USER_MODEL = 'api.User'
-

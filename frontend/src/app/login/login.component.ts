@@ -1,6 +1,7 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { GoogleLoginProvider, SocialAuthService } from 'angularx-social-login';
 import { environment } from 'src/environments/environment';
 import { SnackbarComponent } from '../shared/components/snackbar/snackbar.component';
 import { AuthUserService } from '../shared/services/auth-user.service';
@@ -33,7 +34,9 @@ export class LoginComponent implements OnInit, OnDestroy {
   constructor(
     private authService: AuthUserService,
     private router: Router,
-    private _PusherSrv: PusherService
+    private _PusherSrv: PusherService,
+    private _socialAuthSrv: SocialAuthService,
+    private _authSrv: AuthUserService
   ) {}
 
   ngOnDestroy() {
@@ -117,9 +120,26 @@ export class LoginComponent implements OnInit, OnDestroy {
     loader.classList.remove('visible');
   }
 
-  logginGoogle() {
-    const google__uri = `/accounts/google/login/?process=login`;
-    window = open(google__uri) as Window;
+  async logginGoogle() {
+    try {
+      await this._socialAuthSrv?.signIn(GoogleLoginProvider?.PROVIDER_ID);
+
+      this._socialAuthSrv.authState.subscribe((user) => {
+        const data = {
+          email: user.email || "",
+          first_name: user.firstName || "",
+          last_name: user.lastName || "",
+          avatar: user.photoUrl || "",
+        };
+        console.log(data)
+
+        this._authSrv._loginGoogleUser(data).subscribe((res: any) => {
+          localStorage.setItem('access', res['access']);
+          localStorage.setItem('refresh', res['refresh']);
+          this.router.navigate(['/']);
+        });
+      });
+    } catch (err) {}
   }
 
   // Getters to handle messages of error in the form
