@@ -11,7 +11,7 @@ class LoginView(APIView):
         serializer = LoginSerializer(data=request.data)
         
         if serializer.is_valid():
-            user = request.user
+            user = User.objects.filter(email=request.data['email']).first()
             user.status = True
             user.save()
             token = RefreshToken.for_user(user)
