@@ -146,8 +146,6 @@ export class ChatComponent implements OnInit {
 
   async setChat(chat: Chat) {
     this.chat_selected = chat;
-    const id = this.user.id===chat.user_1.id?chat.user_2.id:chat.user_1.id;
-    this._pusherSrv.pusher.subscribe(`${id}--channel`)
     this.yesChatView?.setChat(parseInt(chat.id as string), this.user);
   }
 

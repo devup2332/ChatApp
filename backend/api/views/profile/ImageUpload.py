@@ -46,6 +46,7 @@ class ImageUploadView(APIView):
         pusher_client.trigger(f"{request.user.id}--channel", 'photo-updated-user', {
             "message": "Photo updated successfully"
         })
+
         return Response({
             "message": "Photo updated successfully"
         })
