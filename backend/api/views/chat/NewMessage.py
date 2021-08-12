@@ -14,14 +14,16 @@ class NewMessage(APIView):
 
     def post(self,request):
         message = request.data['message']['message'] 
-        channel = request.data['channel']
         chat = Chat.objects.filter(id=request.data['id']).first()
         message = Message.objects.create(message=message,emitter=request.user,chat=chat)
         message = MessageSerializer(message)
         chat.last_message = message.data['message']
         chat.save()
 
-        pusher_client.trigger(str(channel),'new-message-user',{
+        pusher_client.trigger(f"{chat.user_1.id}--channel" ,'new-message-user',{
+                "message": message.data
+        })
+        pusher_client.trigger(f"{chat.user_2.id}--channel",'new-message-user',{
                 "message": message.data
         })
         

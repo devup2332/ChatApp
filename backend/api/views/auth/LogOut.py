@@ -14,7 +14,7 @@ class LogOutView(APIView):
         user = request.user
         user.status = False
         user.save()
-        pusher_client.trigger('chat','logout-user',{
+        pusher_client.trigger(f"{user.id}--channel",'logout-user',{
                 "message": "User is logout"
         })
         return Response({

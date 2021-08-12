@@ -61,6 +61,7 @@ services:
       - certs:/etc/nginx/certs:ro
       - vhostd:/etc/nginx/vhost.d
       - html:/usr/share/nginx/html
+      - ./client_max_body_size.conf:/etc/nginx/conf.d/client_max_body_size.conf:ro
     networks:
       - chat-network
     labels:

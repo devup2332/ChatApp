@@ -11,11 +11,11 @@ class LoginView(APIView):
         serializer = LoginSerializer(data=request.data)
         
         if serializer.is_valid():
-            user = User.objects.filter(email=request.data['email']).first()
+            user = request.user
             user.status = True
             user.save()
             token = RefreshToken.for_user(user)
-            pusher_client.trigger('chat','login-user',{
+            pusher_client.trigger(f"{user.id}--channel",'login-user',{
                 "message": "user logged now",
             })
             res = {
