@@ -43,7 +43,7 @@ class ImageUploadView(APIView):
 
         user.avatar = response["secure_url"]
         user.save()
-        pusher_client.trigger('channel_chat', 'photo-updated-user', {
+        pusher_client.trigger(f"{request.user.id}--channel", 'photo-updated-user', {
             "message": "Photo updated successfully"
         })
         return Response({
