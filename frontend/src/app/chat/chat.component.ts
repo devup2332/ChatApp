@@ -52,7 +52,11 @@ export class ChatComponent implements OnInit {
   ) {}
 
   async ngOnInit(): Promise<void> {
+    //Start servcice again to acces to user and pusher instance
+    this._authSrv._startService();
+    this._pusherSrv.startService();
     this.user = await this._authSrv._getUserLogged();
+
     //Start loading
     this.loading = true;
 
@@ -75,17 +79,11 @@ export class ChatComponent implements OnInit {
     this._pusherSrv.channel?.bind(
       'new-chat',
       async (data: { [chat: string]: Chat }) => {
-        if (
-          this.user.id === data.chat.user_1.id ||
-          this.user.id === data.chat.user_2.id
-        ) {
-          console.log('Agregado');
-          this.chats.push(data.chat);
-        }
+        this.chats.push(data.chat);
       }
     );
 
-    this._pusherSrv.channel.bind('photo-updated-user', async () => {
+    this._pusherSrv.channel?.bind('photo-updated-user', async () => {
       await this.getUserLogged();
     });
   }
@@ -146,9 +144,11 @@ export class ChatComponent implements OnInit {
     }
   }
 
-  async setChat(chat?: any) {
+  async setChat(chat: Chat) {
     this.chat_selected = chat;
-    this.yesChatView?.setChat(chat.id, this.user);
+    const id = this.user.id===chat.user_1.id?chat.user_2.id:chat.user_1.id;
+    this._pusherSrv.pusher.subscribe(`${id}--channel`)
+    this.yesChatView?.setChat(parseInt(chat.id as string), this.user);
   }
 
   async newMessage() {

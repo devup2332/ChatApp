@@ -39,15 +39,11 @@ export class YesChatComponent implements OnInit, OnDestroy {
 
     //Pusher handlers
     this._pusherSrv.channel?.bind('login-user', async () => {
-      if (this.chat) {
         this.chat = await this._chatSrv._getChat(this.chat.id);
-      }
     });
 
     this._pusherSrv.channel?.bind('logout-user', async () => {
-      if (this.chat) {
         this.chat = await this._chatSrv._getChat(this.chat.id);
-      }
     });
 
     this._pusherSrv.channel?.bind('new-message-user', async (data: any) => {

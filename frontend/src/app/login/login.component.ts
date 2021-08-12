@@ -32,7 +32,6 @@ export class LoginComponent implements OnInit, OnDestroy {
   match: boolean = false;
 
   constructor(
-    private authService: AuthUserService,
     private router: Router,
     private _PusherSrv: PusherService,
     private _socialAuthSrv: SocialAuthService,
@@ -40,7 +39,7 @@ export class LoginComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnDestroy() {
-    this._PusherSrv.channel.unbind_all();
+    this._PusherSrv.channel?.unbind_all();
   }
 
   ngOnInit(): void {
@@ -71,15 +70,6 @@ export class LoginComponent implements OnInit, OnDestroy {
       ]),
       password: new FormControl('', [Validators.required]),
     });
-
-    this._PusherSrv.channel.bind('login-google', (data: any) => {
-      if (window) {
-        window.close();
-        localStorage.setItem('access', data.access);
-        localStorage.setItem('refresh', data.refresh);
-        this.router.navigate(['/']);
-      }
-    });
   }
 
   async loginUser(credentials: any, loader: HTMLElement) {
@@ -92,7 +82,7 @@ export class LoginComponent implements OnInit, OnDestroy {
     //Handle of res of backend
     loader.classList.add('visible');
     try {
-      const res = await this.authService._login_user(credentials);
+      const res = await this._authSrv._login_user(credentials);
 
       if (!res.message) {
         localStorage.setItem('access', res.access);
@@ -131,7 +121,6 @@ export class LoginComponent implements OnInit, OnDestroy {
           last_name: user.lastName || "",
           avatar: user.photoUrl || "",
         };
-        console.log(data)
 
         this._authSrv._loginGoogleUser(data).subscribe((res: any) => {
           localStorage.setItem('access', res['access']);

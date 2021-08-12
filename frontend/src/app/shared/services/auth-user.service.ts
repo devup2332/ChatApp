@@ -12,6 +12,10 @@ import { User } from '../models/user.model';
 export class AuthUserService {
   user: User;
   constructor(private http: HttpClient) {
+    this._startService();
+  }
+
+  _startService() {
     if (localStorage.getItem('access')) {
       (async () => {
         this.user = await this._getUserLogged();
@@ -83,6 +87,7 @@ export class AuthUserService {
     ):
       | Promise<ValidationErrors | null>
       | Observable<ValidationErrors | null> => {
+      console.log('Validating');
       const access = localStorage.getItem('access');
       const email = control.value;
 

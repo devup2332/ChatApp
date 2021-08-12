@@ -43,7 +43,6 @@ export class ChatServiceService {
         {
           message,
           id,
-          channel: this._pusherSrv.channel?.name
         },
         {
           headers: {
@@ -77,7 +76,7 @@ export class ChatServiceService {
     return this.router
       .post(
         `${environment.backend_uri}/api/create-chat`,
-        { id, socket: this.channel },
+        { id },
         {
           headers: {
             Authorization: `Bearer ${access}`,

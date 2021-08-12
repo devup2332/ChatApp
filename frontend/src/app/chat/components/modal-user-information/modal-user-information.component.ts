@@ -19,7 +19,6 @@ export class ModalUserInformationComponent implements OnInit {
   @ViewChild(SnackbarComponent) snackbar: SnackbarComponent;
 
   constructor(
-    private authSrv: AuthUserService,
     private _pusherSrv: PusherService,
     private _authSrv: AuthUserService
   ) {}
@@ -45,7 +44,7 @@ export class ModalUserInformationComponent implements OnInit {
       email: new FormControl(
         '',
         [Validators.required, Validators.pattern(environment.emailPatt)],
-        this.authSrv._validate_email_profile()
+        this._authSrv._validate_email_profile()
       ),
       phone: new FormControl('', [
         Validators.required,
@@ -94,7 +93,7 @@ export class ModalUserInformationComponent implements OnInit {
     data.append('id', this.user?.avatar?.id);
 
     this.snackbar.show('Uploading');
-    this.authSrv._uploadPhoto(data).subscribe((e) => {
+    this._authSrv._uploadPhoto(data).subscribe((e) => {
       this.snackbar.close();
     });
   }
